@@ -4,9 +4,10 @@ import HomeScreen from "./components/HomeScreen"
 import ListPeople from './components/ListPeople';
 import LoginForm from './components/LoginForm';
 import ConsumePage from './components/ConsumePage';
-import io from "socket.io-client"
 import React, {useState} from "react"
+//import io from "socket.io-client"
 
+/*
 const socket = io("http://localhost:3000")
 
 const recibirData = () => {
@@ -21,6 +22,7 @@ const recibirData = () => {
 
   })
 }
+*/
 
 
 const Stack = createNativeStackNavigator();
