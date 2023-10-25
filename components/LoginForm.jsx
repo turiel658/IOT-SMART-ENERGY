@@ -1,9 +1,11 @@
 import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
+import { AuthContext } from '../context/AuthContext';
 
 export default function LoginForm({navigation}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const {login} = useContext(AuthContext)
   return (
     <View style={styles.container}>
       <View>
@@ -28,6 +30,7 @@ export default function LoginForm({navigation}) {
             onPress={() => {
               setUsername("");
               setPassword("");
+              login()
             }}
             style={styles.formButton}
           >
