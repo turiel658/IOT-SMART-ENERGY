@@ -6,8 +6,8 @@ export const AuthProvider = ({ children }) => {
   const [ isLoading, setIsLoading ] = useState(true)
   const [ userToken, setUserToken ] = useState(null)
 
-  const login = () => {
-    setUserToken("Test Token")
+  const login = (token) => {
+    setUserToken(token)
     setIsLoading(false)
   }
   const logout = () => {

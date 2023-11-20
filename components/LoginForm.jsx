@@ -1,11 +1,36 @@
 import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
 import React, { useState, useContext } from "react"
 import { AuthContext } from '../context/AuthContext';
+import axios from "axios"
 
 export default function LoginForm({navigation}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const {login} = useContext(AuthContext)
+  const {login, userToken} = useContext(AuthContext)
+
+  const handlePress = async () => {
+    try {
+      const res = await fetch("http://192.168.18.7:3000/api/client-login", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-type':'application/json'
+            },
+            body: JSON.stringify({
+                nombreUsuario: username,
+                contraseña: password
+            })
+        });
+      const token = await res.json()
+      console.log(token.token)
+      setUsername("");
+      setPassword("");
+      login(token.token)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View>
@@ -27,12 +52,9 @@ export default function LoginForm({navigation}) {
         <View>
           <Text style={styles.notRegistered}>¿Aún no estas registrado? presiona aquí</Text>
           <Pressable 
-            onPress={() => {
-              setUsername("");
-              setPassword("");
-              login()
-            }}
+            onPress={handlePress}
             style={styles.formButton}
+            title="Iniciar Sesión"
           >
             <Text style={styles.formButtonText}>Iniciar Sesión</Text>
           </Pressable>

@@ -1,22 +1,38 @@
 import { View, Text, Dimensions, StyleSheet } from "react-native"
 import { LineChart } from "react-native-chart-kit"
+import io from "socket.io-client"
+import { AuthContext } from "../context/AuthContext"
+import { useContext, useState } from "react"
+
+const socket = io("http://192.168.18.7:3000/")
 
 export default function ConsumePage() {
+  const {userToken} = useContext(AuthContext)
+  const [watts, setWatts] = useState([])
+  const [totalWatts, setTotalWatts] = useState(0)
+
+  socket.emit("client:solicitarDatos", userToken)
+
+  socket.on("server:enviarDatos", (datos) => {
+
+    setWatts(datos.map(dato => dato.watts))
+  })
+
   return (
     <View style={ { justifyContent: "center", alignItems: "center" } }>
       <Text style={{marginTop:10}}>
         Pagina de revisar consumo
       </Text>
       <LineChart data={{
-        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        //labels: watts.map((dato, index) => ""),
         datasets: [
             {
-              data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+              data: watts
             }   
         ] 
         }}
         width={Dimensions.get("window").width - 100}
-        height={200}
+        height={300}
         chartConfig={{
           backgroundGradientFrom: "#0000FF",
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
@@ -32,11 +48,11 @@ export default function ConsumePage() {
       />
       <View style={styles.infoContainer}>
         <View style={styles.infoCard}>
-          <Text style={styles.payPrice}>$15,000</Text>
+          <Text style={styles.payPrice}>${totalWatts*0.82}</Text>
           <Text style={styles.info}>Total a pagar</Text>
         </View>
         <View style={styles.infoCard}>
-          <Text style={styles.whatts}>15000 Wh</Text>
+          <Text style={styles.whatts}>{totalWatts/1000} KWh</Text>
           <Text style={styles.info}>Consumo en kWhatts</Text>
         </View>
         <View style={styles.infoCard}>

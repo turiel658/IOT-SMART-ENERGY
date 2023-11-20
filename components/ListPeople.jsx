@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 export default function ListPeople() {
   const [people, setPeople] = useState([])
-
+  
   function getPeople() {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then(res => res.json())
@@ -13,13 +13,20 @@ export default function ListPeople() {
   }
   getPeople()
   return (
+    
     <FlatList
       data={people}
       renderItem={({ item }) => (   
         <View style={styles.cardContainer} key={item.id}>
-          <View><Text style={styles.name}>{item.name}</Text></View>
-          <View><Text>{item.username}</Text></View>
-          <View><Text style={styles.email}>{item.email}</Text></View>
+          <View>
+            <Text style={styles.name}>{item.name}</Text>
+          </View>
+          <View>
+            <Text>{item.username}</Text>
+          </View>
+          <View>
+            <Text style={styles.email}>{item.email}</Text>
+          </View>
         </View>
         )
       }

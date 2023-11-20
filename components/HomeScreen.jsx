@@ -14,6 +14,9 @@ export default function HomeScreen({navigation}) {
         <Pressable onPress={()=> navigation.navigate("Consume")}>
           <Text>Revisar consumo</Text>
         </Pressable>
+        <Pressable onPress={()=> navigation.navigate("Profile")}>
+          <Text>Perfil</Text>
+        </Pressable>
         <Pressable onPress={()=> logout()}>
           <Text>logout</Text>
         </Pressable>
