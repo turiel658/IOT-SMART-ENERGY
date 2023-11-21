@@ -1,10 +1,11 @@
+
 import { View, Text, Dimensions, StyleSheet } from "react-native"
 import { LineChart } from "react-native-chart-kit"
 import io from "socket.io-client"
 import { AuthContext } from "../context/AuthContext"
 import { useContext, useState } from "react"
 
-const socket = io("http://192.168.18.7:3000/")
+const socket = io("http://localhost:3000/")
 
 export default function ConsumePage() {
   const {userToken} = useContext(AuthContext)
@@ -89,3 +90,4 @@ const styles = StyleSheet.create({
     color: "white",
   }
 })
+
